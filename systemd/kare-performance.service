@@ -1,0 +1,15 @@
+[Unit]
+Description=VENTUNO Q CPU performance policy
+Documentation=https://docs.kernel.org/admin-guide/pm/cpufreq.html
+Wants=sysfsutils.service
+After=local-fs.target sysfsutils.service
+Before=multi-user.target
+ConditionPathExists=/sys/devices/system/cpu/cpufreq
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/kare-set-performance-governor
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

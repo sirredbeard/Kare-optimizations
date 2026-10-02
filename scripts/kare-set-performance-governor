@@ -1,0 +1,14 @@
+#!/bin/sh
+set -eu
+
+found=0
+for policy in /sys/devices/system/cpu/cpufreq/policy*; do
+    [ -e "$policy/scaling_governor" ] || continue
+    printf '%s\n' performance > "$policy/scaling_governor"
+    found=1
+done
+
+if [ "$found" -eq 0 ]; then
+    echo "No CPU frequency policies were found." >&2
+    exit 1
+fi
